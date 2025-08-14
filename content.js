@@ -64,14 +64,18 @@ function renderGraph(data) {
     container.style.marginBottom = "0px";
 
     container.innerHTML = `
-        <div style="font-size:15px; font-weight:600; margin-bottom:6px; line-height:1.3; color:#222;">
-            QuickStats LinkedIn-Feed-Zeit
+        <div style="font-size:15px; font-weight:600; margin-bottom:6px;">QuickStats</div>
+        <div style="margin-bottom:2px;">
+        Heute: <b>${formatDuration(data[todayKey]||0)}</b>
+        <span style="font-size:12px; color:#666;">(${diffDay>=0?'+':''}${formatDuration(diffDay)} vs. gestern)</span>
         </div>
-        <div style="margin-bottom:2px;">Heute: <b>${formatDuration(data[todayKey]||0)}</b> (${diffDay>=0?'+':''}${formatDuration(diffDay)} vs. gestern)</div>
         <div style="margin-bottom:2px;">Letzte 7 Tage: <b>${formatDuration(times.slice(-7).reduce((a,b)=>a+b,0))}</b></div>
-        <div style="margin-bottom:8px;">Woche vs. letzte Woche: <b>${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b></div>
+        <div style="margin-bottom:8px;">
+        <span style="font-size:13px; color:#666;">Woche vs. letzte Woche:</span>
+        <b>${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b>
+        </div>
         <div style="display:flex; align-items:center; justify-content:center; width:100%; min-height:48px;">
-            <canvas id="linkedinTimeChart" width="220" height="48" style="margin-top:0; max-width:100%;"></canvas>
+        <canvas id="linkedinTimeChart" width="220" height="48" style="margin-top:0; max-width:100%;"></canvas>
         </div>
     `;
 

@@ -21,9 +21,6 @@
             "js": [
                 "content.js",
                 "chart.js"
-            ],
-            "css": [
-                "styles.css"
             ]
         }
     ],

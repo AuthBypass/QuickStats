@@ -49,26 +49,32 @@ function renderGraph(data) {
     yesterday.setDate(today.getDate() - 1);
     let yesterdayKey = `${yesterday.getFullYear()}-${yesterday.getMonth()+1}-${yesterday.getDate()}`;
     let diffDay = (data[todayKey] || 0) - (data[yesterdayKey] || 0);
+
     let container = document.createElement('div');
     container.id = "linkedin-time-tracker";
+    container.className = "artdeco-card mb2 overflow-hidden profile-card";
+    container.style.padding = "16px";
     container.style.background = "#fff";
-    container.style.borderRadius = "8px";
+    container.style.borderRadius = "12px";
     container.style.boxShadow = "0 2px 8px rgba(0,0,0,0.04)";
-    container.style.padding = "10px";
-    container.style.marginTop = "10px";
-    container.style.fontSize = "13px";
-    container.style.maxWidth = "220px";
-    container.style.display = "flex";
-    container.style.flexDirection = "column";
+    container.style.fontSize = "14px";
+    container.style.lineHeight = "1.5";
+    container.style.maxWidth = "272px";
+    container.style.marginTop = "8px";
+    container.style.marginBottom = "0px";
+
     container.innerHTML = `
-        <div style="font-size:15px; font-weight:600; margin-bottom:8px; line-height:1.2;">
+        <div style="font-size:15px; font-weight:600; margin-bottom:6px; line-height:1.3; color:#222;">
             QuickStats LinkedIn-Feed-Zeit
         </div>
         <div style="margin-bottom:2px;">Heute: <b>${formatDuration(data[todayKey]||0)}</b> (${diffDay>=0?'+':''}${formatDuration(diffDay)} vs. gestern)</div>
         <div style="margin-bottom:2px;">Letzte 7 Tage: <b>${formatDuration(times.slice(-7).reduce((a,b)=>a+b,0))}</b></div>
         <div style="margin-bottom:8px;">Woche vs. letzte Woche: <b>${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b></div>
-        <canvas id="linkedinTimeChart" width="180" height="50" style="margin-top:8px; max-width:100%;"></canvas>
+        <div style="display:flex; align-items:center; justify-content:center; width:100%; min-height:48px;">
+            <canvas id="linkedinTimeChart" width="220" height="48" style="margin-top:0; max-width:100%;"></canvas>
+        </div>
     `;
+
     var profileCard = document.querySelector('.artdeco-card.profile-card');
     if (profileCard) {
         profileCard.parentNode.insertBefore(container, profileCard.nextSibling);

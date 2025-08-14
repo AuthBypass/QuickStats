@@ -1,0 +1,11 @@
+#linkedin-time-tracker {
+    background: #f3f6f8;
+    border: 1px solid #d2d9df;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+#linkedinTimeChart {
+    margin-top: 10px;
+}

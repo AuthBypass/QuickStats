@@ -71,8 +71,8 @@ function renderGraph(data) {
         </div>
         <div style="margin-bottom:2px;">Letzte 7 Tage: <b>${formatDuration(times.slice(-7).reduce((a,b)=>a+b,0))}</b></div>
         <div style="margin-bottom:8px;">
-        <span style="font-size:13px; color:#666;">Woche vs. letzte Woche:</span>
-        <b>${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b>
+        <span style="font-size:12px; color:#666;">Woche vs. letzte Woche:</span>
+        <b style="font-size:12px">${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b>
         </div>
         <div style="display:flex; align-items:center; justify-content:center; width:100%; min-height:48px;">
         <canvas id="linkedinTimeChart" width="220" height="48" style="margin-top:0; max-width:100%;"></canvas>
@@ -117,3 +117,16 @@ function renderGraph(data) {
     }, 100);
 }
 getTimeData().then(renderGraph);
+
+function insertStatsWidgetIfNeeded() {
+    if (!document.querySelector('.artdeco-card.profile-card')) return;
+    if (document.getElementById('linkedin-time-tracker')) return;
+    getTimeData().then(renderGraph);
+}
+
+const observer = new MutationObserver(() => {
+    insertStatsWidgetIfNeeded();
+});
+observer.observe(document.body, { childList: true, subtree: true });
+
+setInterval(insertStatsWidgetIfNeeded, 2000);

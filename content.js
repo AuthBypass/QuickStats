@@ -51,14 +51,30 @@ function renderGraph(data) {
     let diffDay = (data[todayKey] || 0) - (data[yesterdayKey] || 0);
     let container = document.createElement('div');
     container.id = "linkedin-time-tracker";
+    container.style.background = "#fff";
+    container.style.borderRadius = "8px";
+    container.style.boxShadow = "0 2px 8px rgba(0,0,0,0.04)";
+    container.style.padding = "10px";
+    container.style.marginTop = "10px";
+    container.style.fontSize = "13px";
+    container.style.maxWidth = "220px";
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
     container.innerHTML = `
-        <div style="font-weight:bold; margin-bottom:8px;">QuickStats LinkedIn-Feed-Zeit</div>
-        <div>Heute: <b>${formatDuration(data[todayKey]||0)}</b> (${diffDay>=0?'+':''}${formatDuration(diffDay)} vs. gestern)</div>
-        <div>Letzte 7 Tage: <b>${formatDuration(times.slice(-7).reduce((a,b)=>a+b,0))}</b></div>
-        <div>Woche vs. letzte Woche: <b>${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b></div>
-        <canvas id="linkedinTimeChart" width="350" height="120"></canvas>
+        <div style="font-size:15px; font-weight:600; margin-bottom:8px; line-height:1.2;">
+            QuickStats LinkedIn-Feed-Zeit
+        </div>
+        <div style="margin-bottom:2px;">Heute: <b>${formatDuration(data[todayKey]||0)}</b> (${diffDay>=0?'+':''}${formatDuration(diffDay)} vs. gestern)</div>
+        <div style="margin-bottom:2px;">Letzte 7 Tage: <b>${formatDuration(times.slice(-7).reduce((a,b)=>a+b,0))}</b></div>
+        <div style="margin-bottom:8px;">Woche vs. letzte Woche: <b>${diffWeek>=0?'+':''}${formatDuration(diffWeek)}</b></div>
+        <canvas id="linkedinTimeChart" width="180" height="50" style="margin-top:8px; max-width:100%;"></canvas>
     `;
-    document.body.prepend(container);
+    var profileCard = document.querySelector('.artdeco-card.profile-card');
+    if (profileCard) {
+        profileCard.parentNode.insertBefore(container, profileCard.nextSibling);
+    } else {
+        document.body.prepend(container);
+    }
     setTimeout(() => {
         const canvas = document.getElementById('linkedinTimeChart');
         if (canvas) {
@@ -75,8 +91,15 @@ function renderGraph(data) {
                 options: {
                     plugins: { legend: { display: false }},
                     scales: {
-                        y: { beginAtZero: true, grid: { color: "#eee" }},
-                        x: { grid: { display: false }}
+                        y: {
+                            beginAtZero: true,
+                            grid: { display: false },
+                            ticks: { display: false }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
                     }
                 }
             });

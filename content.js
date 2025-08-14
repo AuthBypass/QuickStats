@@ -1,5 +1,3 @@
-console.log("QuickStats content.js geladen!");
-
 function getTodayKey() {
     const d = new Date();
     return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
@@ -70,8 +68,8 @@ function renderGraph(data) {
                     labels: days,
                     datasets: [{
                         label: 'Minuten/Tag',
-                        data: times.map(x => (x/60).toFixed(1)),
-                        backgroundColor: '#0073b1'
+                        data: times.map(x => Math.round(x/60)),
+                        backgroundColor: Array(times.length).fill('#0073b1')
                     }]
                 },
                 options: {
